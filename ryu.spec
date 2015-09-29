@@ -4,15 +4,15 @@
 #
 Name     : ryu
 Version  : 3.25.1
-Release  : 2
+Release  : 3
 URL      : https://pypi.python.org/packages/source/r/ryu/ryu-3.25.1.tar.gz
 Source0  : https://pypi.python.org/packages/source/r/ryu/ryu-3.25.1.tar.gz
 Summary  : Component-based Software-defined Networking Framework
 Group    : Development/Tools
 License  : Apache-2.0 MIT
 Requires: ryu-bin
-Requires: ryu-config
 Requires: ryu-python
+Requires: ryu-data
 BuildRequires : FormEncode-python
 BuildRequires : eventlet-python
 BuildRequires : lxml-python
@@ -31,6 +31,7 @@ BuildRequires : six
 BuildRequires : six-python
 BuildRequires : stevedore
 BuildRequires : webob-python
+Patch1: 0001-change-default-to-usr-share-defaults-ryu.patch
 
 %description
 What's Ryu
@@ -40,18 +41,18 @@ Ryu is a component-based software defined networking framework.
 %package bin
 Summary: bin components for the ryu package.
 Group: Binaries
-Requires: ryu-config
+Requires: ryu-data
 
 %description bin
 bin components for the ryu package.
 
 
-%package config
-Summary: config components for the ryu package.
-Group: Default
+%package data
+Summary: data components for the ryu package.
+Group: Data
 
-%description config
-config components for the ryu package.
+%description data
+data components for the ryu package.
 
 
 %package python
@@ -59,6 +60,7 @@ Summary: python components for the ryu package.
 Group: Default
 Requires: eventlet-python
 Requires: msgpack-python-python
+Requires: oslo.config
 Requires: routes-python
 Requires: six-python
 Requires: webob-python
@@ -69,6 +71,7 @@ python components for the ryu package.
 
 %prep
 %setup -q -n ryu-3.25.1
+%patch1 -p1
 
 %build
 python2 setup.py build -b py2
@@ -78,6 +81,10 @@ python3 setup.py build -b py3
 rm -rf %{buildroot}
 python2 -tt setup.py build -b py2 install --root=%{buildroot}
 python3 -tt setup.py build -b py3 install --root=%{buildroot}
+## make_install_append content
+install -d -m 755 %{buildroot}/usr/share/defaults/ryu
+install -p -D -m 644 etc/ryu/ryu.conf %{buildroot}/usr/share/defaults/ryu/
+## make_install_append end
 
 %files
 %defattr(-,root,root,-)
@@ -87,9 +94,9 @@ python3 -tt setup.py build -b py3 install --root=%{buildroot}
 /usr/bin/ryu
 /usr/bin/ryu-manager
 
-%files config
+%files data
 %defattr(-,root,root,-)
-%config /usr/etc/ryu/ryu.conf
+/usr/share/defaults/ryu/ryu.conf
 
 %files python
 %defattr(-,root,root,-)
