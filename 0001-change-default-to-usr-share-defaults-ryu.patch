@@ -1,0 +1,52 @@
+From 5a3d05dc26ff6cf960ea2a31d2d9253a61fc416a Mon Sep 17 00:00:00 2001
+From: "Simental Magana, Marcos" <marcos.simental.magana@intel.com>
+Date: Tue, 29 Sep 2015 16:55:23 -0500
+Subject: [PATCH] change default to /usr/share/defaults/ryu
+
+---
+ ryu/cmd/manager.py | 6 +++++-
+ setup.cfg          | 2 +-
+ 2 files changed, 6 insertions(+), 2 deletions(-)
+
+diff --git a/ryu/cmd/manager.py b/ryu/cmd/manager.py
+index b1ce8da..207ce56 100755
+--- a/ryu/cmd/manager.py
++++ b/ryu/cmd/manager.py
+@@ -31,6 +31,7 @@ ryu.contrib.update_module_path()
+ from ryu import cfg
+ import logging
+ import sys
++import os
+ 
+ from ryu import log
+ log.early_init_log(logging.DEBUG)
+@@ -58,9 +59,12 @@ CONF.register_cli_opts([
+ 
+ def main(args=None, prog=None):
+     try:
++        conf_file = '/etc/ryu/ryu.conf'
++        if not os.path.exists(conf_file):
++            conf_file = '/usr/share/defaults/ryu/ryu.conf'
+         CONF(args=args, prog=prog,
+              project='ryu', version='ryu-manager %s' % version,
+-             default_config_files=['/usr/local/etc/ryu/ryu.conf'])
++             default_config_files=[conf_file])
+     except cfg.ConfigFilesNotFoundError:
+         CONF(args=args, prog=prog,
+              project='ryu', version='ryu-manager %s' % version)
+diff --git a/setup.cfg b/setup.cfg
+index fa01155..66812eb 100644
+--- a/setup.cfg
++++ b/setup.cfg
+@@ -27,7 +27,7 @@ keywords =
+ packages = 
+ 	ryu
+ data_files = 
+-	etc/ryu =
++	/etc/ryu =
+ 	etc/ryu/ryu.conf
+ 
+ [build_sphinx]
+-- 
+2.4.3
+

@@ -1,0 +1,2 @@
+install -d -m 755 %{buildroot}/usr/share/defaults/ryu
+install -p -D -m 644 etc/ryu/ryu.conf %{buildroot}/usr/share/defaults/ryu/
