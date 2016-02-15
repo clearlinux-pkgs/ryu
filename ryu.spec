@@ -4,7 +4,7 @@
 #
 Name     : ryu
 Version  : 3.26
-Release  : 5
+Release  : 6
 URL      : https://pypi.python.org/packages/source/r/ryu/ryu-3.26.tar.gz
 Source0  : https://pypi.python.org/packages/source/r/ryu/ryu-3.26.tar.gz
 Summary  : Component-based Software-defined Networking Framework
