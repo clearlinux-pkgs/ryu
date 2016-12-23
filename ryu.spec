@@ -4,7 +4,7 @@
 #
 Name     : ryu
 Version  : 4.0
-Release  : 13
+Release  : 14
 URL      : https://pypi.python.org/packages/source/r/ryu/ryu-4.0.tar.gz
 Source0  : https://pypi.python.org/packages/source/r/ryu/ryu-4.0.tar.gz
 Summary  : Component-based Software-defined Networking Framework
