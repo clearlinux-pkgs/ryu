@@ -4,7 +4,7 @@
 #
 Name     : ryu
 Version  : 4.0
-Release  : 14
+Release  : 15
 URL      : https://pypi.python.org/packages/source/r/ryu/ryu-4.0.tar.gz
 Source0  : https://pypi.python.org/packages/source/r/ryu/ryu-4.0.tar.gz
 Summary  : Component-based Software-defined Networking Framework
@@ -13,25 +13,17 @@ License  : Apache-2.0 MIT
 Requires: ryu-bin
 Requires: ryu-python
 Requires: ryu-data
-BuildRequires : FormEncode-python
-BuildRequires : eventlet-python
-BuildRequires : lxml-python
-BuildRequires : msgpack-python-python
-BuildRequires : oslo.config
-BuildRequires : paramiko-python
+Requires: eventlet
+Requires: msgpack-python
+Requires: netaddr
+Requires: oslo.config
+Requires: six
+BuildRequires : configparser-python
 BuildRequires : pbr
 BuildRequires : pip
-BuildRequires : pylint-python
 BuildRequires : python-dev
 BuildRequires : python3-dev
-BuildRequires : pytz-python
-BuildRequires : repoze.lru-python
-BuildRequires : routes-python
 BuildRequires : setuptools
-BuildRequires : six
-BuildRequires : six-python
-BuildRequires : stevedore
-BuildRequires : webob-python
 Patch1: 0001-change-default-to-usr-share-defaults-ryu.patch
 
 %description
@@ -59,12 +51,6 @@ data components for the ryu package.
 %package python
 Summary: python components for the ryu package.
 Group: Default
-Requires: eventlet-python
-Requires: msgpack-python-python
-Requires: oslo.config
-Requires: routes-python
-Requires: six-python
-Requires: webob-python
 
 %description python
 python components for the ryu package.
@@ -75,13 +61,16 @@ python components for the ryu package.
 %patch1 -p1
 
 %build
+export LANG=C
+export SOURCE_DATE_EPOCH=1489285367
 python2 setup.py build -b py2
 python3 setup.py build -b py3
 
 %install
+export SOURCE_DATE_EPOCH=1489285367
 rm -rf %{buildroot}
-python2 -tt setup.py build -b py2 install --root=%{buildroot}
-python3 -tt setup.py build -b py3 install --root=%{buildroot}
+python2 -tt setup.py build -b py2 install --root=%{buildroot} --force
+python3 -tt setup.py build -b py3 install --root=%{buildroot} --force
 ## make_install_append content
 install -d -m 755 %{buildroot}/usr/share/defaults/ryu
 install -p -D -m 644 etc/ryu/ryu.conf %{buildroot}/usr/share/defaults/ryu/
