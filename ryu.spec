@@ -4,7 +4,7 @@
 #
 Name     : ryu
 Version  : 4.27
-Release  : 16
+Release  : 17
 URL      : https://files.pythonhosted.org/packages/c8/f7/21b5a656646de0329241d8449098205494273c8c54389fee46a75a57dcb8/ryu-4.27.tar.gz
 Source0  : https://files.pythonhosted.org/packages/c8/f7/21b5a656646de0329241d8449098205494273c8c54389fee46a75a57dcb8/ryu-4.27.tar.gz
 Summary  : Component-based Software-defined Networking Framework
@@ -19,9 +19,12 @@ Requires: eventlet
 Requires: msgpack
 Requires: netaddr
 Requires: oslo.config
+Requires: ovs
 Requires: six
+Requires: tinyrpc
 BuildRequires : buildreq-distutils3
 BuildRequires : pbr
+BuildRequires : tinyrpc
 Patch1: 0001-change-default-to-usr-share-defaults-ryu.patch
 
 %description
@@ -102,7 +105,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1533874122
+export SOURCE_DATE_EPOCH=1533913130
 python3 setup.py build -b py3
 
 %install
