@@ -1,5 +1,5 @@
 PKG_NAME := ryu
-URL = https://files.pythonhosted.org/packages/62/62/aed092b4d098274d1ff2ace4d21a3b45f6e8277d4bb21e459c53c22afa45/ryu-4.29.tar.gz
+URL = https://files.pythonhosted.org/packages/19/4b/aa67d6c0fc2a2105c0eb2af145761ad8b674168001977fdfcb010a5e3393/ryu-4.30.tar.gz
 ARCHIVES = 
 
 include ../common/Makefile.common
