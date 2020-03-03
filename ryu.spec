@@ -4,7 +4,7 @@
 #
 Name     : ryu
 Version  : 4.32
-Release  : 28
+Release  : 29
 URL      : https://files.pythonhosted.org/packages/f5/21/4defc2601049fc50dd924bc28d03c1da5116ea5250b5b6e58b85371c1447/ryu-4.32.tar.gz
 Source0  : https://files.pythonhosted.org/packages/f5/21/4defc2601049fc50dd924bc28d03c1da5116ea5250b5b6e58b85371c1447/ryu-4.32.tar.gz
 Summary  : Component-based Software-defined Networking Framework
@@ -15,6 +15,7 @@ Requires: ryu-data = %{version}-%{release}
 Requires: ryu-license = %{version}-%{release}
 Requires: ryu-python = %{version}-%{release}
 Requires: ryu-python3 = %{version}-%{release}
+Requires: Routes
 Requires: eventlet
 Requires: msgpack
 Requires: netaddr
@@ -22,8 +23,15 @@ Requires: oslo.config
 Requires: ovs
 Requires: six
 Requires: tinyrpc
+BuildRequires : Routes
 BuildRequires : buildreq-distutils3
+BuildRequires : eventlet
+BuildRequires : msgpack
+BuildRequires : netaddr
+BuildRequires : oslo.config
+BuildRequires : ovs
 BuildRequires : pbr
+BuildRequires : six
 BuildRequires : tinyrpc
 Patch1: 0001-change-default-to-usr-share-defaults-ryu.patch
 
@@ -71,6 +79,7 @@ python components for the ryu package.
 Summary: python3 components for the ryu package.
 Group: Default
 Requires: python3-core
+Provides: pypi(ryu)
 
 %description python3
 python3 components for the ryu package.
@@ -78,14 +87,17 @@ python3 components for the ryu package.
 
 %prep
 %setup -q -n ryu-4.32
+cd %{_builddir}/ryu-4.32
 %patch1 -p1
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-export LANG=C
-export SOURCE_DATE_EPOCH=1557250017
+export LANG=C.UTF-8
+export SOURCE_DATE_EPOCH=1583221486
+# -Werror is for werrorists
+export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
@@ -100,8 +112,8 @@ python3 setup.py build
 export MAKEFLAGS=%{?_smp_mflags}
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/ryu
-cp LICENSE %{buildroot}/usr/share/package-licenses/ryu/LICENSE
-cp debian/copyright %{buildroot}/usr/share/package-licenses/ryu/debian_copyright
+cp %{_builddir}/ryu-4.32/LICENSE %{buildroot}/usr/share/package-licenses/ryu/2b8b815229aa8a61e483fb4ba0588b8b6c491890
+cp %{_builddir}/ryu-4.32/debian/copyright %{buildroot}/usr/share/package-licenses/ryu/65c531fc34708604e047d920cc1d8e9ad94db23f
 python3 -tt setup.py build  install --root=%{buildroot}
 echo ----[ mark ]----
 cat %{buildroot}/usr/lib/python3*/site-packages/*/requires.txt || :
@@ -125,8 +137,8 @@ install -p -D -m 644 etc/ryu/ryu.conf %{buildroot}/usr/share/defaults/ryu/
 
 %files license
 %defattr(0644,root,root,0755)
-/usr/share/package-licenses/ryu/LICENSE
-/usr/share/package-licenses/ryu/debian_copyright
+/usr/share/package-licenses/ryu/2b8b815229aa8a61e483fb4ba0588b8b6c491890
+/usr/share/package-licenses/ryu/65c531fc34708604e047d920cc1d8e9ad94db23f
 
 %files python
 %defattr(-,root,root,-)
