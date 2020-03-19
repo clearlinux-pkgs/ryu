@@ -4,7 +4,7 @@
 #
 Name     : ryu
 Version  : 4.32
-Release  : 29
+Release  : 30
 URL      : https://files.pythonhosted.org/packages/f5/21/4defc2601049fc50dd924bc28d03c1da5116ea5250b5b6e58b85371c1447/ryu-4.32.tar.gz
 Source0  : https://files.pythonhosted.org/packages/f5/21/4defc2601049fc50dd924bc28d03c1da5116ea5250b5b6e58b85371c1447/ryu-4.32.tar.gz
 Summary  : Component-based Software-defined Networking Framework
@@ -36,9 +36,21 @@ BuildRequires : tinyrpc
 Patch1: 0001-change-default-to-usr-share-defaults-ryu.patch
 
 %description
-What's Ryu
 ==========
-Ryu is a component-based software defined networking framework.
+        Ryu is a component-based software defined networking framework.
+        
+        Ryu provides software components with well defined API's that make it
+        easy for developers to create new network management and control
+        applications. Ryu supports various protocols for managing network
+        devices, such as OpenFlow, Netconf, OF-config, etc. About OpenFlow,
+        Ryu supports fully 1.0, 1.2, 1.3, 1.4, 1.5 and Nicira Extensions.
+        
+        All of the code is freely available under the Apache 2.0 license. Ryu
+        is fully written in Python.
+        
+        
+        Quick Start
+        ===========
 
 %package bin
 Summary: bin components for the ryu package.
@@ -80,6 +92,15 @@ Summary: python3 components for the ryu package.
 Group: Default
 Requires: python3-core
 Provides: pypi(ryu)
+Requires: pypi(eventlet)
+Requires: pypi(msgpack)
+Requires: pypi(netaddr)
+Requires: pypi(oslo.config)
+Requires: pypi(ovs)
+Requires: pypi(routes)
+Requires: pypi(six)
+Requires: pypi(tinyrpc)
+Requires: pypi(webob)
 
 %description python3
 python3 components for the ryu package.
@@ -95,8 +116,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1583221486
-# -Werror is for werrorists
+export SOURCE_DATE_EPOCH=1584644714
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
