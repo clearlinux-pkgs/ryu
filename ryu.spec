@@ -4,7 +4,7 @@
 #
 Name     : ryu
 Version  : 4.34
-Release  : 32
+Release  : 33
 URL      : https://files.pythonhosted.org/packages/25/30/1c1972b3f9bf52de32d2fdf7c5206ff7099e739bf69b6004f4a71bcbde18/ryu-4.34.tar.gz
 Source0  : https://files.pythonhosted.org/packages/25/30/1c1972b3f9bf52de32d2fdf7c5206ff7099e739bf69b6004f4a71bcbde18/ryu-4.34.tar.gz
 Summary  : Component-based Software-defined Networking Framework
